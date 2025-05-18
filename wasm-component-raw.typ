@@ -12,6 +12,8 @@ This is the problem the #link("https://component-model.bytecodealliance.org/")[W
 
 That's all great when it works, but we're in the "preview 2" stage of the component model and the tools are still maturing, or may not even exist yet. So what if I want to implement tool support for the component model, or what if I want to write a component in "raw" WASM? Let's find out!
 
+All code for the examples below is available open source on GitHub: #link("https://github.com/gertvv/wasm-component-raw")[wasm-component-raw] and #link("https://github.com/gertvv/wasm-cabi-realloc")[wasm-cabi-realloc].
+
 == WIT & Canonical ABI basics
 
 A normal (pre-component model) WASM module is generally referred to as "core WASM". A WASM component is essentially a wrapper around a core WebAssembly module that includes its high-level language-neutral interface definition as well as some other metadata. All you need to interface with a component is included with the component itself. If we have a WASM component in hand, we can easily see this using e.g. `wasm-tools`:
