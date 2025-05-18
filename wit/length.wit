@@ -1,0 +1,20 @@
+package local:root;
+
+world example {
+  enum encoding {
+    latin1,
+    utf8,
+  }
+
+  record raw-string {
+    bytes: list<u8>,
+    encoding: encoding,
+  }
+
+  variant text-data {
+    raw(raw-string),
+    str(string),
+  }
+
+  export length: func(s: text-data) -> u32;
+}

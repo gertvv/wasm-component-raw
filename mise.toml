@@ -1,0 +1,5 @@
+[tools]
+"cargo:wasm-tools" = "1.230"
+just = "latest"
+"npm:binaryen" = "123"
+typst = "latest"

@@ -1,0 +1,39 @@
+package local:shapes;
+
+interface shapes {
+    record circle {
+        radius: f32,
+    }
+
+    record rectangle {
+        width: f32,
+        height: f32,
+    }
+
+    variant shape {
+        circle(circle),
+        rectangle(rectangle),
+    }
+}
+
+interface area {
+    use shapes.{shape};
+
+    area: func(shape: shape) -> f32;
+    area-sum: func(shapes: list<shape>) -> f32;
+    area-each: func(shapes: list<shape>) -> list<f32>;
+}
+
+interface scale {
+    use shapes.{shape};
+
+    scale: func(shape: list<shape>, factor: f32) -> list<shape>;
+}
+
+world calculator {
+    export area;
+}
+
+world scaler {
+    export scale;
+}

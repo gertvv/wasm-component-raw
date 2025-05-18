@@ -1,0 +1,5 @@
+world hello {
+  import wasi:cli/stdout@0.2.5;
+
+  export hello: func();
+}
