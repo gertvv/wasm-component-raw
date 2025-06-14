@@ -410,16 +410,5 @@ Hello, WASI!
 
 As you can see we say hello, and afterwards `wasmtime` outputs the return value (an empty tuple represents no return value). Perfect!
 
-#html.elem("style", attrs: (type: "text/css"))[
-  pre {
-    margin-inline: 1em;
-    padding: 1em;
-    background: \#eee;
-  }
-  p {
-    text-align: justify;
-  }
-]
-
-#html.elem("link", attrs: (rel: "stylesheet", href: "https://gertvv.nl/css/gert.css?v1", type: "text/css"))
+#html.elem("link", attrs: (rel: "stylesheet", href: "/css/gert.css?v2", type: "text/css"))
 #html.elem("link", attrs: (rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Raleway", type: "text/css"))
