@@ -107,14 +107,14 @@ $ wasm-tools component embed example.wit simple.wasm -o simple_embed.wasm
 $ wasm-tools component new simple_embed.wasm --adapt cabi.wasm -o simple_component.wasm 
 ```
 
-In true UNIX fashion: no news is good news. So now we've got a component that we can test-drive. This step turned out to be harder than I had anticipated. Initially I was using #link("https://github.com/rylev/wepl")[WEPL] for this but it seems to be abandoned and doesn't support the latest `wasmtime` features (such as `wasm-gc`). Luckily, `wasmtime` supports a `--invoke` syntax for components that's so bleeding edge it's coming in the #link("https://github.com/bytecodealliance/wasmtime/issues/10764")[*next* major version]. It uses a general text representation of the component model's high-level value types called #link("https://github.com/bytecodealliance/wasm-tools/tree/main/crates/wasm-wave")[WAVE] that's incredibly useful. Here we go:
+In true UNIX fashion: no news is good news. So now we've got a component that we can test-drive. This step turned out to be harder than I had anticipated. Initially I was using #link("https://github.com/rylev/wepl")[WEPL] for this but it seems to be abandoned and doesn't support the latest `wasmtime` features (such as `wasm-gc`). Luckily, `wasmtime` supports a `--invoke` syntax for components that's so bleeding edge it's coming in the #link("https://github.com/bytecodealliance/wasmtime/issues/10764")[*next* major version] (update: released in v33 on 2025-05-20). It uses a general text representation of the component model's high-level value types called #link("https://github.com/bytecodealliance/wasm-tools/tree/main/crates/wasm-wave")[WAVE] that's incredibly useful. Here we go:
 
 ```
-$ wasmtime-dev run --invoke 'length("abc")' simple_component.wasm
+$ wasmtime run --invoke 'length("abc")' simple_component.wasm
 3
-$ wasmtime-dev run --invoke 'length("abcdef")' simple_component.wasm
+$ wasmtime run --invoke 'length("abcdef")' simple_component.wasm
 6
-$ wasmtime-dev run --invoke 'length("áèø")' simple_component.wasm
+$ wasmtime run --invoke 'length("áèø")' simple_component.wasm
 6
 ```
 
@@ -162,7 +162,7 @@ So our component works as expected: it returns the correct length for ASCII-only
 We create locals to contain the current byte and the running total string length, loop until we reach the end, and then return the length. We read bytes from linear memory using `i32.load8_u` (load 8 bits into an i32, treating it as unsigned). Some bitwise operations tell us how many bytes the current character is encoded as. Now we get the correct result:
 
 ```
-$ wasmtime-dev run --invoke 'length("áèø")' better_component.wasm
+$ wasmtime run --invoke 'length("áèø")' better_component.wasm
 3
 ```
 
@@ -248,7 +248,7 @@ world scaler {
 }
 ```
 
-Rather than work with the "lowered" representation directly, let's use the WASM GC (TODO: LINK) types as an internal representation:
+Rather than work with the "lowered" representation directly, let's use the [WASM GC](https://github.com/WebAssembly/gc) types as an internal representation:
 
 ```wat
   (rec
@@ -340,7 +340,7 @@ Each shape is stored in a 12-byte block. The tag is in principle stored in 1 byt
 The code to store a shape in linear memory is very similar. In each case, we loop through the list of shapes to copy it to/from our internal representation. There isn't anything too interesting going on so we'll skip the code listings. It works (if we enable the flags required for WASM GC support):
 
 ```bash
-$ wasmtime-dev run \
+$ wasmtime run \
     -W function-references,gc \
     --invoke 'scale([circle({radius: 2.0}),
       rectangle({width: 3.0, height: 4.0})], 1.5)'  \
@@ -403,7 +403,7 @@ We import the two WASI functions we need, and export our linear memory and our `
 $ wasm-as hello.wat
 $ wasm-tools component embed wit/ --world hello hello.wasm -o hello_embed.wasm
 $ wasm-tools component new hello_embed.wasm -o hello_comp.wasm
-$ wasmtime-dev --invoke 'hello()' hello_comp.wasm
+$ wasmtime --invoke 'hello()' hello_comp.wasm
 Hello, WASI!
 ()
 ```
