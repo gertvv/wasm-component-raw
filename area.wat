@@ -128,7 +128,7 @@
   ;; component model version of area
   ;; the entire variant/record is flattened into parameters
   (func
-    $cm_area (export "cm32p2|local:shapes/area|area")
+    $cm_area (export "cm32p2|local:root/area|area")
     (param $tag i32) (param $f0 f32) (param $f1 f32) (result f32)
     (block
       (block
@@ -164,7 +164,7 @@
   ;; the list is getting flattened to a pointer and a length
   ;; the list's elements must be loaded from linear memory
   (func
-    $cm-area-sum (export "cm32p2|local:shapes/area|area-sum")
+    $cm-area-sum (export "cm32p2|local:root/area|area-sum")
     (param $ptr i32) (param $len i32)
     (result f32)
     (call $area-sum (call $load-shapes (local.get $ptr) (local.get $len))))
@@ -173,7 +173,7 @@
   ;; the list is getting flattened to a pointer and a length
   ;; the return value is stored in linear memory and a pointer returned
   (func
-    $cm-area-each (export "cm32p2|local:shapes/area|area-each")
+    $cm-area-each (export "cm32p2|local:root/area|area-each")
     (param $ptr i32) (param $len i32)
     (result i32)
     (local $arr (ref $f32s))
@@ -223,7 +223,7 @@
   ;; the post function can free the memory that was allocated for the result
   ;; (I think!)
   (func
-    $cm-area-each_post (export "cm32p2|local:shapes/area|area-each_post")
+    $cm-area-each_post (export "cm32p2|local:root/area|area-each_post")
     (param $ptr i32)
     (local $len i32)
     (local.set $len (i32.load offset=4 (local.get $ptr)))

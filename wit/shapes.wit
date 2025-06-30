@@ -1,4 +1,4 @@
-package local:shapes;
+package local:root;
 
 interface shapes {
     record circle {

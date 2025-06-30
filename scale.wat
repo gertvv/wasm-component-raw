@@ -71,7 +71,7 @@
   ;; the list is getting flattened to a pointer and a length
   ;; the return value is stored in linear memory and a pointer returned
   (func
-    (export "cm32p2|local:shapes/scale|scale")
+    (export "cm32p2|local:root/scale|scale")
     (param $ptr i32) (param $len i32) (param $factor f32)
     (result i32)
     (local $arr (ref $shapes))
@@ -132,7 +132,7 @@
 
   ;; the post function can free the memory that was allocated for the result
   (func
-    (export "cm32p2|local:shapes/scale|scale_post")
+    (export "cm32p2|local:root/scale|scale_post")
     (param $ptr i32)
     (local $len i32)
     (local.set $len (i32.load offset=4 (local.get $ptr)))

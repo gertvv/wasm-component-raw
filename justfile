@@ -10,7 +10,7 @@ area: build-dir
     --adapt ../wasm-cabi-realloc/cabi.wasm \
     --output build/area.comp.wasm \
     build/area.embed.wasm
-  wasmtime-dev run \
+  wasmtime run \
     -W function-references,gc \
     --invoke 'area-each([circle({radius: 1.0}), rectangle({width: 1.0, height: 1.0})])' \
     build/area.comp.wasm
@@ -27,10 +27,10 @@ scale: build-dir
     --adapt ../wasm-cabi-realloc/cabi.wasm \
     --output build/scale.comp.wasm \
     build/scale.embed.wasm
-  wasmtime-dev run \
+  wasmtime run \
     -W function-references,gc,component-model \
     --invoke 'scale([circle({radius: 1.0}), rectangle({width: 1.0, height: 1.0})], 1.5)' \
-    scale_comp.wasm
+    build/scale.comp.wasm
 
 hello: build-dir
   wasm-as --output build/hello.core.wasm hello.wat
@@ -42,7 +42,11 @@ hello: build-dir
     --adapt ../wasm-cabi-realloc/cabi.wasm \
     --output build/hello.comp.wasm \
     build/hello.embed.wasm
-  wasmtime-dev --invoke 'hello()' build/hello.comp.wasm
+  wasmtime --invoke 'hello()' build/hello.comp.wasm
 
 build-dir:
   mkdir -p ./build/
+
+article:
+  typst compile --format html --features html wasm-component-raw.typ
+  cp wasm-component-raw.html ../gertvv.nl/posts/wasm-component-raw.html

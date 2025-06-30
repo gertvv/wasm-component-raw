@@ -3,3 +3,4 @@
 just = "latest"
 "npm:binaryen" = "123"
 typst = "latest"
+wasmtime = "v34.0.1"
