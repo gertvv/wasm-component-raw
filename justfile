@@ -44,6 +44,37 @@ hello: build-dir
     build/hello.embed.wasm
   wasmtime --invoke 'hello()' build/hello.comp.wasm
 
+reverse: build-dir
+  wasm-as \
+    --enable-gc --enable-reference-types \
+    --output build/reverse.core.wasm reverse.wat
+  wasm-tools component embed wit/ \
+    --world rev \
+    --output build/reverse.embed.wasm \
+    build/reverse.core.wasm
+  wasm-tools component new \
+    --adapt ../wasm-cabi-realloc/cabi.wasm \
+    --output build/reverse.comp.wasm \
+    build/reverse.embed.wasm
+  wasmtime run \
+    -W function-references,gc,component-model \
+    --invoke 'reverse-string("!dlroW ,olleH")' \
+    build/reverse.comp.wasm
+
+reverse-upper: build-dir reverse
+  jco componentize revup.js \
+    --wit wit/ --world-name revup \
+    --out build/revup.part.wasm \
+    --disable all
+  wac plug \
+    --plug build/reverse.comp.wasm \
+    build/revup.part.wasm \
+    -o build/revup.comp.wasm
+  wasmtime run \
+    -W function-references,gc,component-model \
+    --invoke 'reverse-and-uppercase("!dlroW ,olleH")' \
+    build/revup.comp.wasm
+
 build-dir:
   mkdir -p ./build/
 

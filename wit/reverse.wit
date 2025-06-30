@@ -1,0 +1,19 @@
+package local:root;
+
+interface reverse {
+    reverse-string: func(s: string) -> string;
+}
+
+world rev {
+    export reverse;
+}
+
+interface reversed-upper {
+  reverse-and-uppercase: func(s: string) -> string;
+}
+
+world revup {
+  import reverse;
+
+  export reversed-upper;
+}

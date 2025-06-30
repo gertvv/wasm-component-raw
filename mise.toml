@@ -1,6 +1,8 @@
 [tools]
+"cargo:wac-cli" = "0.7.0"
 "cargo:wasm-tools" = "1.230"
 just = "latest"
+"npm:@bytecodealliance/jco" = "latest"
 "npm:binaryen" = "123"
 typst = "latest"
 wasmtime = "v34.0.1"
