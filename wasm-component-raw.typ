@@ -248,7 +248,7 @@ world scaler {
 }
 ```
 
-Rather than work with the "lowered" representation directly, let's use the [WASM GC](https://github.com/WebAssembly/gc) types as an internal representation:
+Rather than work with the "lowered" representation directly, let's use the #link("https://github.com/WebAssembly/gc")[WASM GC] types as an internal representation:
 
 ```wat
   (rec
